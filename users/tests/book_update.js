@@ -24,4 +24,20 @@ describe('Book update suit:', () => {
     book.set('name', 'Bible');
     assertName(book.save(), done);
   });
+
+  it('Should update by update() method', (done) => {
+    assertName(book.update({ name: 'Bible' }), done);
+  });
+
+  it('Should update by update of class', (done) => {
+    assertName(Book.update({ name: 'Idiot' }, { name: 'Bible' }), done);
+  });
+
+  it('Should update by findOneAndUpdate of class', (done) => {
+    assertName(Book.findOneAndUpdate({ name: 'Idiot' }, { name: 'Bible' }), done);
+  });
+
+  it('Should update by findByIdAndUpdate of class', (done) => {
+    assertName(Book.findByIdAndUpdate(book._id, { name: 'Bible' }), done);
+  });
 });
