@@ -8,4 +8,11 @@ describe('Book validation tests', () => {
     const { message } = validationData.errors.name;
     assert(message === 'Book name is required');
   });
+
+  it('The rating sould be in the range (1,5)', () => {
+    const book = new Book({ rating: 6 });
+    const validationData = book.validateSync();
+    const { message } = validationData.errors.rating;
+    assert(message === 'Rating must be between 1 and 5');
+  });
 });
