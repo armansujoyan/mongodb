@@ -5,7 +5,7 @@ describe('Book update suit:', () => {
   let book;
 
   beforeEach((done) => {
-    book = new Book({ name: 'Idiot' });
+    book = new Book({ name: 'Idiot', rating: 0 });
     book.save()
       .then(() => done());
   });
@@ -39,5 +39,14 @@ describe('Book update suit:', () => {
 
   it('Should update by findByIdAndUpdate of class', (done) => {
     assertName(Book.findByIdAndUpdate(book._id, { name: 'Bible' }), done);
+  });
+
+  it('Should increment rating by one', (done) => {
+    Book.findByIdAndUpdate(book._id, { $inc: { rating: 1 } })
+      .then(() => Book.findById(book._id))
+      .then((foundBook) => {
+        assert(foundBook.rating === 1);
+        done();
+      });
   });
 });
