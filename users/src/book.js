@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 const bookSchema = new Schema({
   name: {
     type: String,
+    required: [true, 'Book name is required'],
   },
   rating: {
     type: Number,
