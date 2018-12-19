@@ -5,7 +5,7 @@ describe('Book search', () => {
   let book;
 
   beforeEach((done) => {
-    book = new Book({ name: 'Love' });
+    book = new Book({ name: 'Love', pages: 300 });
     book.save()
       .then(() => done());
   });

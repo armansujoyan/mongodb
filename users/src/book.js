@@ -14,6 +14,10 @@ const bookSchema = new Schema({
       message: 'Rating must be between 1 and 5',
     },
   },
+  pages: {
+    type: Number,
+    required: [true, 'Page count is required'],
+  },
 });
 
 const Book = mongoose.model('book', bookSchema);

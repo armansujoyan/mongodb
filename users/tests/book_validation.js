@@ -17,12 +17,19 @@ describe('Book validation tests', () => {
   });
 
   it('Should reject to update book with false validation', (done) => {
-    const book = new Book({ name: "Bible", rating: 8 });
+    const book = new Book({ name: 'Bible', rating: 8 });
     book.save()
       .catch((validationResult) => {
         const { message } = validationResult.errors.rating;
         assert(message === 'Rating must be between 1 and 5');
         done();
       });
+  });
+
+  it('The page count sould be required', () => {
+    const book = new Book({ pages: undefined });
+    const validationData = book.validateSync();
+    const { message } = validationData.errors.pages;
+    assert(message === 'Page count is required');
   });
 });

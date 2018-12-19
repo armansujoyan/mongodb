@@ -5,7 +5,7 @@ describe('Book deletion tests', () => {
   let book;
 
   beforeEach((done) => {
-    book = new Book({ name: 'Dict' });
+    book = new Book({ name: 'Dict', pages: 220 });
     book.save()
       .then(() => done());
   });
@@ -18,5 +18,4 @@ describe('Book deletion tests', () => {
         done();
       });
   });
-
 });
