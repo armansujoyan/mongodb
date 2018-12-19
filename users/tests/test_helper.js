@@ -12,6 +12,8 @@ before((done) => {
 
 beforeEach((done) => {
   mongoose.connection.collections.users.drop(() => {
-    done();
+    mongoose.connection.collections.books.drop(() => {
+      done();
+    });
   });
 });
