@@ -15,4 +15,14 @@ describe('Book validation tests', () => {
     const { message } = validationData.errors.rating;
     assert(message === 'Rating must be between 1 and 5');
   });
+
+  it('Should reject to update book with false validation', (done) => {
+    const book = new Book({ name: "Bible", rating: 8 });
+    book.save()
+      .catch((validationResult) => {
+        const { message } = validationResult.errors.rating;
+        assert(message === 'Rating must be between 1 and 5');
+        done();
+      });
+  });
 });
