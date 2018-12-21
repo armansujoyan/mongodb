@@ -40,7 +40,7 @@ describe('Association tests', () => {
         path: 'blogPosts',
         populate: {
           path: 'comments',
-          modle: 'comment',
+          model: 'comment',
           populate: {
             path: 'user',
             model: 'user',
