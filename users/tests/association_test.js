@@ -15,20 +15,43 @@ describe('Association tests', () => {
       title: 'JS is Great',
       content: 'Yeah it really is.',
     });
-    comment = new Comment({ content: 'Congrats on a great post.' });
+    comment = new Comment({ contents: 'Congrats on a great post.' });
 
-    joe.blogPosts.push(blogPost);
     blogPost.comments.push(comment);
+    joe.blogPosts.push(blogPost);
     comment.user = joe;
 
     Promise.all([joe.save(), blogPost.save(), comment.save()])
       .then(() => done());
   });
 
-  it.only('Saves a relation between a user and a blogpost', (done) => {
+  it('Saves a relation between a user and a blogpost', (done) => {
     User.findOne({ name: 'Joe' })
+      .populate('blogPosts')
       .then((user) => {
-        console.log(user);
+        assert(user.blogPosts[0].title === 'JS is Great');
+        done();
+      });
+  });
+
+  it('Saves a full relation graph', (done) => {
+    User.findOne({ name: 'Joe' })
+      .populate({
+        path: 'blogPosts',
+        populate: {
+          path: 'comments',
+          modle: 'comment',
+          populate: {
+            path: 'user',
+            model: 'user',
+          },
+        },
+      })
+      .then((user) => {
+        assert(user.name === 'Joe');
+        assert(user.blogPosts[0].title === 'JS is Great');
+        assert(user.blogPosts[0].comments[0].contents === 'Congrats on a great post.');
+        assert(user.blogPosts[0].comments[0].user.name === 'Joe');
         done();
       });
   });
