@@ -20,7 +20,7 @@ const UserSchema = new Schema({
   }],
 });
 
-UserSchema.pre('remove', function userPreDel() {
+UserSchema.pre('remove', function userPreDel(next) {
   const BlogPost = mongoose.model('blogPost');
   BlogPost.remove({ _id: { $in: this.blogPosts } })
     .then(() => next());
