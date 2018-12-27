@@ -3,7 +3,8 @@ const routes = require('./routes');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-mongoose.connect('mongodb://localhost/driverDb', { useNewUrlParser: true });
+if(process.env.NODE_ENV !== 'test')
+  mongoose.connect('mongodb://localhost/driverDb', { useNewUrlParser: true });
 
 const app = express();
 
