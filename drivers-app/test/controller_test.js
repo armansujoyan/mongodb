@@ -47,7 +47,6 @@ describe('Controller test.', () => {
       .then(() => {
         request(app)
           .delete(`/api/drivers/${driver._id}`)
-          .send()
           .end((err, res) => {
             Driver.findOne({ email: "ku@ku.com" })
               .then(driver => {
