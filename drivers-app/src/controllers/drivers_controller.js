@@ -10,6 +10,16 @@ module.exports = {
 
     Driver.create(driverProps)
       .then(driver => res.send(driver))
-      .catch(next)
+      .catch(next);
+  },
+
+  update(req, res, next) {
+    const updateProps = req.body;
+    const driverId = req.params.id;
+
+    Driver.findByIdAndUpdate(driverId, updateProps)
+      .then(driver => Driver.findById(driverId)
+        .then(driverById => res.send(driverById)))
+      .catch(next);
   }
 };
