@@ -5,11 +5,11 @@ const { Schema } = mongoose;
 const PointSchema = new Schema({
   type: {
     type: String,
-    default: 'Point'
+    enum: ['Point'],
   },
   coordinates: {
     type: [Number],
-    idx: '2dsphere'
+    index: '2dsphere'
   }
 });
 

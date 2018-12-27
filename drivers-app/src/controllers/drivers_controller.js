@@ -6,16 +6,18 @@ module.exports = {
 
     Driver.find({
       geometry: {
-        $nearSphere: {
-          $geometry: {
-            type: 'Point',
-            coordinates: [ lng, lat ]
-          },
-          $minDistance: 1000,
-          $maxDistance: 5000
-        }
+          $near: {
+            $geometry: {
+              type: 'Point',
+              coordinates: [ lng, lat ]
+            },
+            $minDistance: 0,
+            $maxDistance: 110000
+          }
       }
     })
+    .then(drivers => res.send(drivers))
+    .catch(next);
   },
 
   greeting(req, res) {

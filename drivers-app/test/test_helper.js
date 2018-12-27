@@ -12,6 +12,7 @@ before(done => {
 beforeEach(done => {
   const { drivers } = mongoose.connection.collections;
   drivers.drop()
+    .then(() => drivers.createIndex({ 'geometry': '2dsphere'}))
     .then(() => done())
     .catch(() => done());
 })

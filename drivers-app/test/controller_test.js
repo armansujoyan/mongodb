@@ -55,5 +55,28 @@ describe('Controller test.', () => {
               })
           })
       })
+  });
+
+  it('GET to api/drivers finds drivers in a location', done => {
+    const yerevanDriver = new Driver({
+      email: 'yerevan@arm.com',
+      geometry: { type: 'Point', coordinates: [44.4991, 40.1792] }
+    });
+
+    const usDriver = new Driver({
+      email: 'us@us.com',
+      geometry: { type: 'Point', coordinates: [104.9903, 39.7392] }
+    });
+
+    Promise.all([yerevanDriver.save(), usDriver.save()])
+      .then(() => {
+        request(app)
+          .get(`/api/drivers?lng=45&lat=40`)
+          .end((err, res) => {
+            assert(res.body.length === 1);
+            assert(res.body[0].email === 'yerevan@arm.com');
+            done();
+          })
+      })
   })
 });
